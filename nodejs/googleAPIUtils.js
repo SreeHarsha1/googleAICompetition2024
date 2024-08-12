@@ -47,7 +47,7 @@ function checkSafetyRatings(result) {
       );
     }
   }
-  console.log("All safety ratings are negligible or low.");
+
 }
 
 async function generateContentWithSafetyCheck(
@@ -69,7 +69,6 @@ async function generateContentWithSafetyCheck(
         e.message.includes("500 An internal error has occurred") ||
         e.message.includes("Did not pass safety ratings")
       ) {
-        console.log(`Internal server error occurred: ${e}`);
         retries++;
         if (retries < maxRetries) {
           console.log(`Retrying in ${retryDelay / 1000} seconds...`);
@@ -109,7 +108,6 @@ async function uploadToGemini(path, mimeType) {
       displayName: path,
     });
     const file = uploadResult.file;
-    console.log(`Uploaded file ${file.displayName} as: ${file.name}`);
     return file;
   } catch (e) {
     console.log("Error in uploading file to gemini ", e);

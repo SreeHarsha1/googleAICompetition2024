@@ -49,13 +49,13 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 app.post("/getTextDetails", async (req, res) => {
   try {
-    console.log(req.body)
+
     const {userData, userText} = req.body;
 
     const result = await generatePrompt(userData, null, userText);
 
-    console.log(result);
-    console.log("response 1");
+
+
     res.status(200).json(result);
   } catch (error) {
     console.error("Error in getImageDetails:", error);
@@ -72,23 +72,22 @@ app.post("/getImageDetails", upload.single("image"), async (req, res) => {
       return res.status(404).json({ error: "Image file is not found" });
     }
 
-    console.log("Uploading file");
+
     const uploadResult = await fileManager.uploadFile(imageFile.path, {
       mimeType: "image/jpeg",
       displayName: imageFile.originalname,
     });
-    console.log("Uploading done");
+ 
 
     const file = uploadResult.file;
-    console.log(`Uploaded file ${file.displayName} as: ${file.name}`);
+  
 
     const result = await generatePrompt(userData, file);
 
     // Delete the temporary file
     await fsPromises.unlink(imageFile.path);
 
-    console.log(result);
-    console.log("response 1");
+
     res.status(200).json(result);
   } catch (error) {
     console.error("Error in getImageDetails:", error);
@@ -99,7 +98,7 @@ app.post("/getImageDetails", upload.single("image"), async (req, res) => {
 
 
 app.use("*", (req, res) => {
-  console.log(req,req.path)
+
   res.status(400).send({ error: "bad request - Unsupported API" });
 });
 
@@ -117,7 +116,7 @@ process.on("uncaughtException", (err) => {
 
 const port = process.env.PORT || 8080;
 const useHttps = process.env.USE_HTTPS;
-console.log(useHttps);
+
 if (useHttps === "true") {
   const httpsOptions = {
     key: fs.readFileSync(process.env.SSL_KEY),

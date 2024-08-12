@@ -102,7 +102,6 @@ Here is the Example of a mcdonald ${imageortext} and response i want something l
 `;
 
     totalText += generalText;
-    console.log(totalText);
     let parts = "";
     if (file != null) {
       parts = [
